@@ -59,33 +59,40 @@
         </div>
 
         <div class="card-body">
-            @if ($ultimosProdutos->isEmpty())
-                <p class="text-secondary mb-0">
-                    Nenhuma produto cadastrado
-                </p>
-            @else
-                <div class="table-responsive">
-                    <table class="table table-hover align-middle mb-0">
-                        <thead>
+            <div class="table-responsive">
+                <table class="table table-hover align-middle mb-0">
+                    <thead>
+                        <tr>
+                            <th>Produto</th>
+                            <th>Categoria</th>
+                            <th>Preço</th>
+                            <th>Status</th>
+                            <th>Destaque</th>
+                            <th>Cadastrado em</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach ($ultimosProdutos as $produto)
                             <tr>
-                                <th>Produto</th>
-                                <th>Categoria</th>
-                                <th>Preço</th>
-                                <th>Status</th>
-                                <th>Destaque</th>
-                                <th>Cadastrado em</th>
+                                <td>{{ $produto->nome }}</td>
+                                <td>{{ $produto->categoria->nome }}</td>
+                                <td>{{ $produto->preco }}</td>
+                                <td>
+                                    <span class="badge {{ $produto->ativo ? 'text-bg-success' : 'text-bg-secondary' }}">
+                                        {{ $produto->ativo ? 'Ativo' : 'Inativo' }}
+                                    </span>
+                                </td>
+                                <td>
+                                    <span class="badge {{ $produto->destaque ? 'text-bg-danger' : 'text-bg-light' }}">
+                                        {{ $produto->destaque ? 'Sim' : 'Não' }}
+                                    </span>
+                                </td>
+                                <td>{{ $produto->created_at->format('d/m/Y H:i') }}</td>
                             </tr>
-                        </thead>
-                        <tbody>
-                            @foreach ($ultimosProdutos as $produto)
-                                <tr>
-                                    <td>{{ $produto->nome }}</td>
-                                    <td>{{ $produto->categoria->nome }}</td>
-                                </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
-                </div>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
 </div>
